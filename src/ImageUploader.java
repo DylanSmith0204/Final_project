@@ -3,22 +3,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.util.ArrayList;
 
-    public class ImageUploader implements ActionListener {
+public class ImageUploader implements ActionListener {
 
         public JFrame jframe;
-        private JPanel imagePanel;
         private JLabel imageLabel;
         private JButton[] buttons;
         private JFileChooser fileChooser;
+
+        ArrayList<ImageIcon> images = new ArrayList<>();
+
 
         public ImageUploader() {
             //sets jframe name
             jframe = new JFrame("Image Uploader");
 
 
-            imagePanel = new JPanel();
+            JPanel imagePanel = new JPanel();
             imageLabel = new JLabel();
             fileChooser = new JFileChooser();
 
@@ -26,9 +28,11 @@ import java.io.File;
             // corresponding image. Adds each button to a panel at the top of the frame.
             buttons = new JButton[10];
             JPanel buttonPanel = new JPanel();
+            //creates a new arraylist of imageIcons which are image files
             for (int i = 0; i < 10; i++) {
                 buttons[i] = new JButton("Image " + (i+1));
                 buttonPanel.add(buttons[i]);
+                buttons[i].setIcon(images.get(i));
                 buttons[i].addActionListener(this);
             }
 
@@ -47,21 +51,15 @@ import java.io.File;
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //checks if the user selects the first button
-            if (e.getSource() == buttons[0]) {
-                //should display the "file chooser dialog" which is an interface that
-                // displays and lets user select uploaded files over the center of the jframe.
-                int returnVal = fileChooser.showOpenDialog(jframe);
-                //if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    //File file = fileChooser.getSelectedFile();
-                    //ImageIcon imageIcon = new ImageIcon(ImageIO.read(file));
-                    //imageLabel.setIcon(imageIcon);
-                    //imagePanel.add(imageLabel);
+            String image = e.getActionCommand();
+            for (int i = 0; i < 10; i++) {
+                if (images.get(i).equals(image));
+                    imageLabel.setIcon(images.get(i));
 
                 }
             }
-            // add more if statements for other buttons
+
         }
-    }
+
 
 
